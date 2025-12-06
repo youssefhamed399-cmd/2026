@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>اضغط لفتح الرسالة 💜</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💜</text></svg>">
+  <style>
+    :root{--bg:#050505;--accent:#8b2be2;--accent-2:#6f2dd9}
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font-family:'Poppins',system-ui,Arial; background:linear-gradient(180deg,#000 0%, #050505 100%); color:#fff; display:flex; align-items:center; justify-content:center; overflow-x:hidden;
+    }
+
+    .stage{width:100%;max-width:1100px;padding:30px; text-align:center}
+
+    .title{letter-spacing:2px; font-weight:700; color:#fff; font-size:34px; text-transform:uppercase; display:inline-block; position:relative; margin-bottom:20px}
+    .title .emoji{margin-inline-start:10px}
+
+    .underline{height:4px;width:120px;background:linear-gradient(90deg,#ff4d6d,#ff8a00); margin:14px auto 0; border-radius:4px; opacity:0; transform:translateY(-6px); transition:all .45s ease}
+
+    .heart-wrap{margin-top:36px; display:flex; align-items:center; justify-content:center; position:relative}
+    .heart{width:260px; height:260px; cursor:pointer; position:relative; filter:drop-shadow(0 10px 30px rgba(139,43,226,0.25)); transition:transform .25s ease; z-index:2}
+    .heart svg{width:100%;height:100%; display:block}
+
+    /* glow */
+    .glow{position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:360px; height:360px; border-radius:50%; background:radial-gradient(circle at 50% 40%, rgba(139,43,226,0.18), rgba(139,43,226,0.06) 35%, transparent 60%); filter:blur(22px); pointer-events:none; z-index:1}
+
+    /* reveal overlay */
+    .overlay{position:fixed; inset:0; display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,0.85); opacity:0; visibility:hidden; transition:opacity .45s ease; z-index:40; padding:20px}
+    .overlay.open{opacity:1; visibility:visible}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02)); border-radius:16px; padding:28px; text-align:center; width:min(720px,92%); box-shadow:0 10px 40px rgba(0,0,0,0.6); border:1px solid rgba(255,255,255,0.05)}
+    .card h2{margin:0 0 10px; font-size:28px}
+    .card p{margin:0 0 18px; font-size:18px; opacity:0.95; line-height:1.6}
+    .close-btn{background:transparent;border:2px solid rgba(255,255,255,0.1); color:#fff; padding:10px 28px; border-radius:10px; cursor:pointer; font-size:16px; transition:all 0.3s ease}
+    .close-btn:hover{background:rgba(255,255,255,0.05); border-color:rgba(255,255,255,0.2)}
+
+    /* small mobile tweaks */
+    @media (max-width:420px){
+      .title{font-size:24px; letter-spacing:1px}
+      .heart{width:200px;height:200px}
+      .underline{width:90px}
+      .card{padding:20px}
+      .card h2{font-size:24px}
+      .card p{font-size:16px}
+    }
+
+    /* clicked state animation */
+    .heart.pulse{animation:pop .7s cubic-bezier(.2,.9,.3,1)}
+    @keyframes pop{0%{transform:scale(1)}40%{transform:scale(1.08)}100%{transform:scale(1)}}
+
+    /* instructions */
+    .instructions{color:rgba(255,255,255,0.6); font-size:14px; margin-top:30px; font-weight:400}
+    
+    /* footer */
+    .footer{position:fixed; bottom:20px; width:100%; text-align:center; color:rgba(255,255,255,0.3); font-size:12px}
+    
+    /* loading animation */
+    .loading{display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:#050505; z-index:100; justify-content:center; align-items:center; flex-direction:column}
+    .loading.show{display:flex}
+    .spinner{width:50px; height:50px; border:3px solid rgba(139,43,226,0.3); border-top-color:#8b2be2; border-radius:50%; animation:spin 1s linear infinite; margin-bottom:20px}
+    @keyframes spin{to{transform:rotate(360deg)}}
+
+  </style>
+</head>
+<body>
+  <div class="loading" id="loading">
+    <div class="spinner"></div>
+    <div>جاري التحميل...</div>
+  </div>
+  
+  <div class="stage">
+    <div class="title">اضغط لفتح الرسالة <span class="emoji">💜</span></div>
+    <div class="underline"></div>
+
+    <div class="heart-wrap">
+      <div class="glow"></div>
+      <div id="heart" class="heart" role="button" aria-label="فتح الرسالة" tabindex="0">
+        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="g1" x1="0" x2="1" y1="0" y2="1">
+              <stop offset="0" stop-color="#b36cf3" />
+              <stop offset="1" stop-color="#8b2be2" />
+            </linearGradient>
+            <filter id="blur1" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="6" result="b"/>
+              <feComposite in="b" in2="SourceGraphic" operator="over"/>
+            </filter>
+          </defs>
+          <path id="shape" d="M100 170 L80 150 C30 120 10 90 30 60 C50 30 80 30 100 58 C120 30 150 30 170 60 C190 90 170 120 120 150 Z" fill="url(#g1)"/>
+          <!-- highlights -->
+          <path d="M75 70c6-8 18-10 28-6" fill="none" stroke="rgba(255,255,255,0.18)" stroke-linecap="round" stroke-width="9"/>
+          <path d="M120 85c6-6 14-4 20 2" fill="none" stroke="rgba(255,255,255,0.12)" stroke-linecap="round" stroke-width="8"/>
+          <!-- faint outer glow -->
+          <use href="#shape" fill="none" stroke="rgba(139,43,226,0.18)" stroke-width="8" filter="url(#blur1)"/>
+        </svg>
+      </div>
+    </div>
+    
+    <div class="instructions">إضغط على القلب 💜</div>
+  </div>
+  
+  <div class="footer">تم الإنشاء بواسطة ❤️</div>
+
+  <!-- overlay (revealed after click) -->
+  <div id="overlay" class="overlay" role="dialog" aria-hidden="true">
+    <div class="card">
+      <h2 id="revealTitle">مبروك! لقد فتحت الرسالة 🎉</h2>
+      <p id="revealText">مرحباً بك! هذا مثال لرسالة يمكنك تعديلها بسهولة.<br>ضع رسالتك الخاصة هنا وأرسل الرابط لأحبائك.</p>
+      <button class="close-btn" id="closeBtn">إغلاق</button>
+    </div>
+  </div>
+
+  <script>
+    // Loading screen
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        document.getElementById('loading').classList.remove('show');
+      }, 800);
+    });
+    
+    // If page takes too long to load
+    setTimeout(() => {
+      document.getElementById('loading').classList.remove('show');
+    }, 3000);
+
+    const heart = document.getElementById('heart');
+    const overlay = document.getElementById('overlay');
+    const title = document.querySelector('.title');
+    const underline = document.querySelector('.underline');
+
+    // Small entrance animations
+    setTimeout(() => {
+      title.style.transform = 'translateY(0)';
+      underline.style.opacity = 1;
+      underline.style.transform = 'translateY(0)';
+    }, 300);
+
+    function openReveal() {
+      // Play sound if needed (uncomment to add)
+      // new Audio('https://assets.mixkit.co/sfx/preview/mixkit-select-click-1109.mp3').play();
+      
+      // Pulse effect
+      heart.classList.remove('pulse');
+      void heart.offsetWidth; // Trigger reflow
+      heart.classList.add('pulse');
+
+      // Quick scale for click feedback
+      heart.style.transform = 'scale(1.05)';
+      setTimeout(() => heart.style.transform = 'scale(1)', 200);
+
+      // Show overlay
+      overlay.classList.add('open');
+      overlay.setAttribute('aria-hidden', 'false');
+
+      // Confetti effect
+      confettiBurst();
+      
+      // Prevent multiple clicks
+      heart.style.pointerEvents = 'none';
+      setTimeout(() => heart.style.pointerEvents = 'auto', 1000);
+    }
+
+    // Event listeners
+    heart.addEventListener('click', openReveal);
+    heart.addEventListener('touchstart', (e) => {
+      e.preventDefault();
+      openReveal();
+    });
+
+    // Close overlay
+    document.getElementById('closeBtn').addEventListener('click', () => {
+      overlay.classList.remove('open');
+      overlay.setAttribute('aria-hidden', 'true');
+    });
+
+    // Close overlay when clicking outside
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) {
+        overlay.classList.remove('open');
+        overlay.setAttribute('aria-hidden', 'true');
+      }
+    });
+
+    // Enhanced confetti using Canvas for better performance
+    function confettiBurst() {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      canvas.style.position = 'fixed';
+      canvas.style.top = '0';
+      canvas.style.left = '0';
+      canvas.style.width = '100%';
+      canvas.style.height = '100%';
+      canvas.style.pointerEvents = 'none';
+      canvas.style.zIndex = '50';
+      document.body.appendChild(canvas);
+      
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      
+      const colors = ['#ff4d6d', '#ffd166', '#6be4ff', '#b36cf3', '#8b2be2', '#ff8a00'];
+      const particles = [];
+      
+      for (let i = 0; i < 80; i++) {
+        particles.push({
+          x: canvas.width / 2,
+          y: canvas.height / 2,
+          size: Math.random() * 8 + 4,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          speedX: (Math.random() - 0.5) * 12,
+          speedY: (Math.random() - 0.5) * 8 - 4,
+          rotation: Math.random() * 360,
+          rotationSpeed: (Math.random() - 0.5) * 10
+        });
+      }
+      
+      let animationId;
+      let opacity = 1;
+      
+      function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        particles.forEach(p => {
+          p.x += p.speedX;
+          p.y += p.speedY;
+          p.speedY += 0.1; // Gravity
+          p.rotation += p.rotationSpeed;
+          
+          ctx.save();
+          ctx.translate(p.x, p.y);
+          ctx.rotate(p.rotation * Math.PI / 180);
+          ctx.globalAlpha = opacity;
+          ctx.fillStyle = p.color;
+          
+          // Draw rectangle (confetti piece)
+          ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
+          
+          ctx.restore();
+        });
+        
+        opacity -= 0.008;
+        
+        if (opacity > 0) {
+          animationId = requestAnimationFrame(animate);
+        } else {
+          cancelAnimationFrame(animationId);
+          canvas.remove();
+        }
+      }
+      
+      animate();
+    }
+
+    // Accessibility: allow Enter/Space to open
+    heart.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        openReveal();
+      }
+    });
+
+    // Handle window resize
+    window.addEventListener('resize', () => {
+      if (document.querySelector('canvas')) {
+        document.querySelector('canvas').remove();
+      }
+    });
+  </script>
+</body>
+</html>
