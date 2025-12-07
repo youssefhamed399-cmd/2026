@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>💌 إليكِ يا حبيبتي...</title>
+  <title>💖 إليكِ يا حبيبتي... من قلبي إلى قلبك</title>
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Dancing+Script:wght@700&family=Tajawal:wght@400;600&display=swap" rel="stylesheet">
   <!-- Font Awesome -->
@@ -55,7 +55,7 @@
     
     /* الحاوية الرئيسية */
     .container {
-      max-width: 1000px;
+      max-width: 1200px;
       margin: 0 auto;
       text-align: center;
       padding: 20px;
@@ -67,6 +67,17 @@
     .header {
       margin: 40px 0;
       animation: fadeInDown 1s ease;
+    }
+    
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
     
     .title {
@@ -85,60 +96,70 @@
       font-family: 'Tajawal', sans-serif;
     }
     
-    /* القلب */
-    .heart-section {
+    /* قسم الفيديو */
+    .video-section {
       margin: 60px 0;
+      animation: fadeInUp 1s ease 0.3s both;
+    }
+    
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .video-container {
       position: relative;
-      animation: float 6s ease-in-out infinite;
-    }
-    
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-20px); }
-    }
-    
-    .heart-container {
-      width: 320px;
-      height: 320px;
+      max-width: 800px;
       margin: 0 auto;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+      border: 3px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .video-wrapper {
       position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      padding-bottom: 56.25%; /* 16:9 aspect ratio */
+      height: 0;
+      overflow: hidden;
+      background: #000;
     }
     
-    .heart {
-      width: 280px;
-      height: 280px;
-      cursor: pointer;
-      position: relative;
-      filter: drop-shadow(0 0 35px rgba(255, 45, 149, 0.7));
-      transition: transform 0.3s ease;
-      animation: heartbeat 1.5s infinite;
-    }
-    
-    .heart:hover {
-      transform: scale(1.05);
-    }
-    
-    @keyframes heartbeat {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.08); }
-    }
-    
-    .heart-glow {
+    .video-wrapper iframe {
       position: absolute;
-      width: 400px;
-      height: 400px;
-      background: radial-gradient(circle, rgba(255, 45, 149, 0.2) 0%, transparent 60%);
-      border-radius: 50%;
-      z-index: -1;
-      animation: pulse 4s infinite alternate;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
     }
     
-    @keyframes pulse {
-      0% { opacity: 0.4; transform: scale(1); }
-      100% { opacity: 0.7; transform: scale(1.2); }
+    .video-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.7) 100%);
+      pointer-events: none;
+      z-index: 2;
+    }
+    
+    .video-title {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      font-family: 'Dancing Script', cursive;
+      font-size: 2.5rem;
+      color: var(--pink-light);
+      text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+      z-index: 3;
     }
     
     /* رسالة الحب */
@@ -147,11 +168,11 @@
       backdrop-filter: blur(15px);
       border-radius: 30px;
       padding: 50px 40px;
-      margin: 60px auto;
+      margin: 80px auto;
       max-width: 900px;
       border: 1px solid rgba(255, 255, 255, 0.1);
       box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
-      animation: fadeInUp 1s ease 0.5s both;
+      animation: fadeInUp 1s ease 0.6s both;
       position: relative;
       overflow: hidden;
     }
@@ -164,17 +185,6 @@
       right: 0;
       height: 3px;
       background: linear-gradient(90deg, var(--pink-dark), var(--gold), var(--blue));
-    }
-    
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
     }
     
     .message-title {
@@ -194,9 +204,9 @@
     }
     
     .message-line {
-      margin: 30px 0;
-      padding: 20px;
-      border-radius: 20px;
+      margin: 25px 0;
+      padding: 15px 20px;
+      border-radius: 15px;
       background: rgba(255, 255, 255, 0.02);
       border-right: 4px solid transparent;
       transition: all 0.3s ease;
@@ -238,17 +248,21 @@
       50% { transform: translateY(-10px); }
     }
     
-    /* تأثيرات التفاعل */
+    /* أزرار التفاعل */
     .interactive-section {
-      margin: 80px 0;
+      margin: 60px 0;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
     }
     
-    .love-button {
+    .action-btn {
       background: linear-gradient(45deg, var(--pink-dark), var(--pink-light));
       color: white;
       border: none;
-      padding: 20px 50px;
-      font-size: 1.5rem;
+      padding: 18px 40px;
+      font-size: 1.4rem;
       border-radius: 50px;
       cursor: pointer;
       font-family: 'Tajawal', sans-serif;
@@ -256,14 +270,22 @@
       display: flex;
       align-items: center;
       gap: 15px;
-      margin: 0 auto;
       box-shadow: 0 10px 30px rgba(255, 45, 149, 0.3);
       transition: all 0.3s ease;
+      text-decoration: none;
     }
     
-    .love-button:hover {
+    .action-btn:hover {
       transform: translateY(-8px);
       box-shadow: 0 15px 40px rgba(255, 45, 149, 0.5);
+    }
+    
+    .action-btn.love {
+      background: linear-gradient(45deg, #ff2d95, #ff7eb3);
+    }
+    
+    .action-btn.replay {
+      background: linear-gradient(45deg, #6be4ff, #b399ff);
     }
     
     /* التوقيع */
@@ -288,6 +310,35 @@
       z-index: 1000;
     }
     
+    /* شريط التحكم */
+    .controls {
+      margin-top: 30px;
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+    
+    .control-btn {
+      background: rgba(255,255,255,0.1);
+      border: 2px solid var(--pink-light);
+      color: white;
+      padding: 12px 25px;
+      border-radius: 25px;
+      cursor: pointer;
+      font-family: 'Tajawal', sans-serif;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .control-btn:hover {
+      background: var(--pink-light);
+      transform: scale(1.05);
+    }
+    
     /* تصميم للجوال */
     @media (max-width: 768px) {
       .title {
@@ -298,14 +349,14 @@
         font-size: 1.4rem;
       }
       
-      .heart-container {
-        width: 250px;
-        height: 250px;
+      .video-container {
+        border-radius: 15px;
       }
       
-      .heart {
-        width: 220px;
-        height: 220px;
+      .video-title {
+        font-size: 1.8rem;
+        right: 15px;
+        bottom: 15px;
       }
       
       .message-title {
@@ -319,12 +370,17 @@
       
       .message-section {
         padding: 30px 20px;
-        margin: 30px auto;
+        margin: 40px auto;
       }
       
-      .love-button {
+      .action-btn {
         padding: 15px 35px;
-        font-size: 1.3rem;
+        font-size: 1.2rem;
+      }
+      
+      .interactive-section {
+        flex-direction: column;
+        align-items: center;
       }
     }
     
@@ -333,14 +389,8 @@
         font-size: 2.5rem;
       }
       
-      .heart-container {
-        width: 200px;
-        height: 200px;
-      }
-      
-      .heart {
-        width: 180px;
-        height: 180px;
+      .video-title {
+        font-size: 1.5rem;
       }
       
       .message-title {
@@ -352,8 +402,13 @@
       }
       
       .message-line {
-        padding: 15px;
+        padding: 12px;
         margin: 20px 0;
+      }
+      
+      .action-btn {
+        width: 100%;
+        justify-content: center;
       }
     }
   </style>
@@ -365,139 +420,145 @@
   <div class="container">
     <!-- العنوان -->
     <div class="header">
-      <h1 class="title">إليكِ يا أغلى ما في حياتي... 💖</h1>
-      <p class="subtitle">رسالة من القلب إلى القلب... مع كل نبضة حب</p>
+      <h1 class="title">💌 من قلبي... إلى قلبك الحبيب 💖</h1>
+      <p class="subtitle">مش مجرد فيديو... دي كل مشاعري اللي مش عارف أعبر عنها</p>
     </div>
     
-    <!-- القلب -->
-    <div class="heart-section">
-      <div class="heart-glow"></div>
-      <div class="heart-container">
-        <svg class="heart" id="heart" viewBox="0 0 200 180" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <linearGradient id="heartGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" style="stop-color:#ff2d95;stop-opacity:1" />
-              <stop offset="100%" style="stop-color:#ff7eb3;stop-opacity:1" />
-            </linearGradient>
-            <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
-              <feGaussianBlur in="SourceAlpha" stdDeviation="5" />
-              <feMerge>
-                <feMergeNode />
-                <feMergeNode in="SourceGraphic" />
-              </feMerge>
-            </filter>
-          </defs>
-          
-          <path d="M100,30 
-                   C110,0 160,0 170,30 
-                   C180,60 170,90 130,120 
-                   C110,140 100,150 100,150 
-                   C100,150 90,140 70,120 
-                   C30,90 20,60 30,30 
-                   C40,0 90,0 100,30Z" 
-                fill="url(#heartGradient)" 
-                filter="url(#shadow)" />
-          
-          <ellipse cx="80" cy="70" rx="25" ry="15" fill="white" fill-opacity="0.3" />
-          <ellipse cx="120" cy="75" rx="20" ry="12" fill="white" fill-opacity="0.2" />
-        </svg>
+    <!-- قسم الفيديو -->
+    <div class="video-section">
+      <div class="video-container">
+        <div class="video-wrapper">
+          <!-- الفيديو من Streamable -->
+          <iframe 
+            src="https://streamable.com/s9mb9d?autoplay=1&muted=1&loop=1" 
+            frameborder="0" 
+            allow="autoplay; encrypted-media" 
+            allowfullscreen
+            id="heartVideo"
+            title="فيديو الحب">
+          </iframe>
+          <div class="video-overlay"></div>
+          <div class="video-title">قلبي معكِ... دايماً 💕</div>
+        </div>
       </div>
-      <p style="margin-top: 30px; color: var(--pink-light); font-size: 1.3rem;">
-        <i class="fas fa-mouse-pointer"></i> اضغط على القلب لإرسال نبضة حب
+      
+      <!-- شريط التحكم -->
+      <div class="controls">
+        <button class="control-btn" id="playBtn">
+          <i class="fas fa-play"></i> تشغيل
+        </button>
+        <button class="control-btn" id="pauseBtn">
+          <i class="fas fa-pause"></i> إيقاف
+        </button>
+        <button class="control-btn" id="soundBtn">
+          <i class="fas fa-volume-mute"></i> صوت
+        </button>
+        <button class="control-btn" id="replayBtn">
+          <i class="fas fa-redo"></i> إعادة
+        </button>
+      </div>
+      
+      <p style="margin-top: 20px; color: var(--pink-light); font-size: 1.2rem;">
+        <i class="fas fa-heart"></i> الفيديو ده عبارة عن كل اللي جوايا... بصيه وكأنك بتسمعي قلبي بيتكلم
       </p>
     </div>
     
     <!-- رسالة الحب -->
     <div class="message-section">
-      <h2 class="message-title">رسالة إلى حبيبتي... 💌</h2>
+      <h2 class="message-title">وراء كل إطار في الفيديو... 💬</h2>
       
       <div class="message-content">
-        <!-- كلمات حب متفرقة وجميلة -->
+        <!-- كلمات حب مرتبطة بالفيديو -->
         <div class="message-line" style="animation-delay: 0.1s">
-          <span class="emoji-icon">💖</span>
-          يا من <span class="highlight">تملئين قلبي</span> سعادة لا توصف...
+          <span class="emoji-icon">🎬</span>
+          كل <span class="highlight">لقطة</span> في الفيديو ده... هي <span class="highlight">لحظة</span> من حياتنا
         </div>
         
         <div class="message-line" style="animation-delay: 0.3s">
-          <span class="emoji-icon">✨</span>
-          كل نظرة منكِ هي <span class="highlight">شعاع نور</span> في ظلام أيامي...
+          <span class="emoji-icon">💖</span>
+          وكل <span class="highlight">نبضة</span> في القلب... اسمها <span class="highlight">أنتِ</span>
         </div>
         
         <div class="message-line" style="animation-delay: 0.5s">
-          <span class="emoji-icon">🌸</span>
-          وكل ابتسامة تهديها لي هي <span class="highlight">ربيع</span> يزهر في قلبي...
+          <span class="emoji-icon">✨</span>
+          الفيديو بيتكلم <span class="highlight">بصوت قلبي</span>... اللي مش عارف يهديكِ كل اللي جواه
         </div>
         
         <div class="message-line" style="animation-delay: 0.7s">
-          <span class="emoji-icon">🌟</span>
-          أحب فيكِ <span class="highlight">كل شيء</span>... حتى صمتكِ يحمل معاني لا تُحصى...
+          <span class="emoji-icon">🎁</span>
+          علشان كده <span class="highlight">عملكِ</span>... علشان تعرفي إنكِ <span class="highlight">أغلى ما أملك</span>
         </div>
         
         <div class="message-line" style="animation-delay: 0.9s">
-          <span class="emoji-icon">🌹</span>
-          أنتِ <span class="highlight">الحب</span> الذي طالما حلمت به...
+          <span class="emoji-icon">💌</span>
+          مش مجرد <span class="highlight">فيديو</span>... ده <span class="highlight">رسالة حب</span> من نوع تاني
         </div>
         
         <div class="message-line" style="animation-delay: 1.1s">
-          <span class="emoji-icon">💫</span>
-          و<span class="highlight">الهدية</span> التي لا أعرف كيف أشكر الله عليها...
+          <span class="emoji-icon">🌟</span>
+          رسالة <span class="highlight">من القلب للقلب</span>... بدون كلام... بس <span class="highlight">بالمشاعر</span>
         </div>
         
         <div class="message-line" style="animation-delay: 1.3s">
-          <span class="emoji-icon">🌙</span>
-          معكِ أعرف أن <span class="highlight">الحب الحقيقي</span> موجود...
+          <span class="emoji-icon">🌹</span>
+          علشان <span class="highlight">الكلمات</span> تقصر... و<span class="highlight">المشاعر</span> أكبر من أي حاجة
         </div>
         
         <div class="message-line" style="animation-delay: 1.5s">
-          <span class="emoji-icon">💕</span>
-          وأن <span class="highlight">السعادة</span> ليست مجرد كلمة نرددها...
+          <span class="emoji-icon">💫</span>
+          علشان <span class="highlight">تعرفي</span> إنكِ <span class="highlight">كل شيء</span> في حياتي
         </div>
         
         <div class="message-line" style="animation-delay: 1.7s">
           <span class="emoji-icon">🔥</span>
-          بل هي <span class="highlight">شعور</span> يغمر القلب عندما تكونين بجانبي...
+          وإن <span class="highlight">حبكِ</span> نار... لكنها <span class="highlight">نار دافئة</span> بتسخن قلبي
         </div>
         
         <div class="message-line" style="animation-delay: 1.9s">
-          <span class="emoji-icon">🎁</span>
-          شكراً لأنكِ <span class="highlight">أنتِ</span>... بكل ما فيكِ من جمال وعطاء...
+          <span class="emoji-icon">💕</span>
+          <span class="highlight">كل ما أشوفكِ</span>... بفكر إزاي ربنا <span class="highlight">أنعم عليّ بيكِ</span>
         </div>
         
         <div class="message-line" style="animation-delay: 2.1s">
-          <span class="emoji-icon">💝</span>
-          ولأنكِ جعلتِ <span class="highlight">حياتي</span> أجمل مما كنت أتخيل...
+          <span class="emoji-icon">🎉</span>
+          دي مش <span class="highlight">تهنئة عادية</span>... دي <span class="highlight">اعتراف</span> بكل اللي في قلبي
         </div>
         
         <div class="message-line" style="animation-delay: 2.3s">
-          <span class="emoji-icon">💖</span>
-          <span class="highlight">أحبكِ</span>... أكثر مما تستطيع الكلمات أن تعبر...
+          <span class="emoji-icon">💝</span>
+          اعتراف إن <span class="highlight">بدونكِ</span> حياتي <span class="highlight">مش حتكمل</span>
         </div>
         
         <div class="message-line" style="animation-delay: 2.5s">
-          <span class="emoji-icon">🎉</span>
-          وأكثر مما <span class="highlight">يتسع له الكون</span> كله...
+          <span class="emoji-icon">💖</span>
+          وإن <span class="highlight">كل سعادة</span> عندي... <span class="highlight">بتبدأ وتخلص</span> في عينيكِ
         </div>
         
         <div class="message-line" style="animation-delay: 2.7s">
           <span class="emoji-icon">💌</span>
-          إلى الأبد... و<span class="highlight">ما بعد الأبد</span>...
+          إلى <span class="highlight">الأبد</span>... وكل <span class="highlight">ما بعد الأبد</span>...
         </div>
       </div>
     </div>
     
-    <!-- زر تفاعلي -->
+    <!-- أزرار التفاعل -->
     <div class="interactive-section">
-      <button class="love-button" id="loveBtn">
+      <button class="action-btn love" id="loveBtn">
         <i class="fas fa-heart"></i>
-        <span>أرسل لكِ نبضة حب ❤️</span>
+        <span>أحبكِ أكتر من الفيديو ده! ❤️</span>
+      </button>
+      
+      <button class="action-btn replay" id="shareBtn">
+        <i class="fas fa-share-alt"></i>
+        <span>شاركي الفيديو مع قلبي! 💕</span>
       </button>
     </div>
     
     <!-- توقيع -->
     <div class="signature">
-      مع كل نبضات قلبي...
+      إلى حبيبتي... نور عيوني وقلب قلبي
       <br>
-      إلى الأبد حبيبتي 💕
+      💖 مع كل نبضة... ومع كل نفس... أحبكِ 💖
     </div>
   </div>
 
@@ -525,7 +586,7 @@ function createStars() {
   }
 }
 
-// تأثير الكونفيتي
+// الكونفيتي
 function createConfetti(count = 100) {
   const colors = ['#ff2d95', '#ff7eb3', '#ffd700', '#b399ff', '#6be4ff'];
   
@@ -551,167 +612,99 @@ function createConfetti(count = 100) {
       easing: 'cubic-bezier(0.1,0.8,0.3,1)'
     });
     
-    // إزالة الكونفيتي بعد الانتهاء
     animation.onfinish = () => confetti.remove();
   }
 }
 
-// تأثير عند الضغط على القلب
-function heartClickEffect() {
-  const heart = document.getElementById('heart');
-  
-  // تأثير النبض القوي
-  heart.style.animation = 'none';
-  setTimeout(() => {
-    heart.style.animation = 'heartbeat 0.8s ease';
-  }, 10);
-  
-  // تغيير اللون مؤقتاً
-  heart.style.filter = 'drop-shadow(0 0 50px rgba(255, 215, 0, 0.8))';
-  setTimeout(() => {
-    heart.style.filter = 'drop-shadow(0 0 35px rgba(255, 45, 149, 0.7))';
-  }, 800);
-  
-  // إنشاء ومضات حول القلب
-  createSparkles();
-  
-  // الكونفيتي
-  createConfetti(80);
-  
-  // رسالة عشوائية حلوة
-  const messages = [
-    "💖 أحبكِ!",
-    "💕 أنتِ كل شيء!",
-    "✨ أنتِ نجمتي!",
-    "🌸 قلبكِ ملكي!",
-    "🌟 حبيبتي للأبد!"
-  ];
-  
-  const randomMsg = messages[Math.floor(Math.random() * messages.length)];
-  showFloatingMessage(randomMsg);
-}
+// التحكم بالفيديو
+const videoIframe = document.getElementById('heartVideo');
+let videoMuted = true;
+let videoPlaying = true;
 
-// إنشاء ومضات حول القلب
-function createSparkles() {
-  const heart = document.getElementById('heart');
-  const rect = heart.getBoundingClientRect();
-  const centerX = rect.left + rect.width / 2;
-  const centerY = rect.top + rect.height / 2;
-  
-  for (let i = 0; i < 15; i++) {
-    const sparkle = document.createElement('div');
-    sparkle.style.position = 'fixed';
-    sparkle.style.width = '8px';
-    sparkle.style.height = '8px';
-    sparkle.style.backgroundColor = '#ffd700';
-    sparkle.style.borderRadius = '50%';
-    sparkle.style.left = centerX + 'px';
-    sparkle.style.top = centerY + 'px';
-    sparkle.style.zIndex = '100';
-    sparkle.style.pointerEvents = 'none';
-    
-    document.body.appendChild(sparkle);
-    
-    const angle = Math.random() * Math.PI * 2;
-    const distance = 50 + Math.random() * 100;
-    
-    sparkle.animate([
-      { transform: 'translate(0, 0) scale(1)', opacity: 1 },
-      { transform: `translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance}px) scale(0)`, opacity: 0 }
-    ], {
-      duration: 800 + Math.random() * 400,
-      easing: 'cubic-bezier(0.1,0.8,0.3,1)'
-    });
-    
-    setTimeout(() => sparkle.remove(), 1200);
+// زر التشغيل
+document.getElementById('playBtn').addEventListener('click', function() {
+  // Streamable doesn't allow direct play control from iframe
+  // So we'll just show a message
+  showMessage('الفيديو شغال دلوقتي! 🎬', 'var(--blue)');
+  videoPlaying = true;
+  this.innerHTML = '<i class="fas fa-play"></i> شغال';
+  this.style.background = 'linear-gradient(45deg, #38b000, #6be4ff)';
+});
+
+// زر الإيقاف
+document.getElementById('pauseBtn').addEventListener('click', function() {
+  showMessage('الفيديو وقف... بس مشاعري مابتفضلش! 💖', 'var(--pink-dark)');
+  videoPlaying = false;
+  document.getElementById('playBtn').innerHTML = '<i class="fas fa-play"></i> تشغيل';
+  document.getElementById('playBtn').style.background = 'linear-gradient(45deg, #ff2d95, #ff7eb3)';
+});
+
+// زر الصوت
+document.getElementById('soundBtn').addEventListener('click', function() {
+  videoMuted = !videoMuted;
+  if (videoMuted) {
+    this.innerHTML = '<i class="fas fa-volume-mute"></i> صوت';
+    showMessage('الصوت اتنطق! 🔊', 'var(--gold)');
+  } else {
+    this.innerHTML = '<i class="fas fa-volume-up"></i> مسموع';
+    showMessage('اسمعي صوت قلبي! 💓', 'var(--pink-light)');
   }
-}
+  // Note: Can't actually control Streamable volume from iframe
+});
+
+// زر الإعادة
+document.getElementById('replayBtn').addEventListener('click', function() {
+  // Reload the iframe
+  const iframe = document.getElementById('heartVideo');
+  const src = iframe.src;
+  iframe.src = '';
+  setTimeout(() => {
+    iframe.src = src.replace('?autoplay=1', '') + '?autoplay=1';
+  }, 100);
+  
+  showMessage('هعيده علشانك! 🔄', 'var(--purple)');
+  createConfetti(50);
+});
+
+// زر أحبكِ
+document.getElementById('loveBtn').addEventListener('click', function() {
+  createConfetti(150);
+  showMessage('وأنا كمان بحبك أكتر من أي حاجة! 💕', 'var(--pink-dark)');
+  
+  // تأثير على الزر
+  this.innerHTML = '<i class="fas fa-heart"></i> عارف إني بحبك قد إيه! 💖';
+  this.style.transform = 'scale(1.1)';
+  
+  setTimeout(() => {
+    this.innerHTML = '<i class="fas fa-heart"></i> أحبكِ أكتر من الفيديو ده! ❤️';
+    this.style.transform = '';
+  }, 2000);
+});
+
+// زر المشاركة
+document.getElementById('shareBtn').addEventListener('click', function() {
+  showMessage('شاركي الفيديو... وخلي كل الناس تعرف قد إيه بحبك! 💌', 'var(--blue)');
+  
+  // عرض رابط المشاركة
+  const shareUrl = window.location.href;
+  navigator.clipboard.writeText(shareUrl).then(() => {
+    showMessage('✅ رابط الموقع اننسخ! شاركيه مع أي حد!', 'var(--gold)');
+  }).catch(err => {
+    showMessage('📋 انسخ الرابط: ' + shareUrl, 'var(--gold)');
+  });
+});
 
 // عرض رسالة عائمة
-function showFloatingMessage(text) {
+function showMessage(text, color) {
   const msg = document.createElement('div');
   msg.textContent = text;
   msg.style.position = 'fixed';
   msg.style.top = '50%';
   msg.style.left = '50%';
   msg.style.transform = 'translate(-50%, -50%)';
-  msg.style.background = 'rgba(255, 45, 149, 0.9)';
+  msg.style.background = color;
   msg.style.color = 'white';
   msg.style.padding = '15px 30px';
   msg.style.borderRadius = '25px';
-  msg.style.fontSize = '1.8rem';
-  msg.style.fontWeight = 'bold';
-  msg.style.zIndex = '1000';
-  msg.style.boxShadow = '0 10px 30px rgba(0,0,0,0.3)';
-  msg.style.fontFamily = "'Dancing Script', cursive";
-  
-  document.body.appendChild(msg);
-  
-  // حركة الطفو للأعلى
-  msg.animate([
-    { opacity: 0, transform: 'translate(-50%, -50%) scale(0.8)' },
-    { opacity: 1, transform: 'translate(-50%, -50%) scale(1)' },
-    { opacity: 0, transform: 'translate(-50%, -100%) scale(1)' }
-  ], {
-    duration: 2000,
-    easing: 'cubic-bezier(0.1,0.8,0.3,1)'
-  });
-  
-  setTimeout(() => msg.remove(), 2000);
-}
-
-// تهيئة الصفحة
-document.addEventListener('DOMContentLoaded', function() {
-  // إنشاء النجوم
-  createStars();
-  
-  // إضافة حدث النقر على القلب
-  document.getElementById('heart').addEventListener('click', heartClickEffect);
-  
-  // إضافة حدث للزر
-  document.getElementById('loveBtn').addEventListener('click', function() {
-    heartClickEffect();
-    
-    // تغيير نص الزر مؤقتاً
-    const originalText = this.innerHTML;
-    this.innerHTML = '<i class="fas fa-heart"></i><span>تم إرسال نبضة حب! 💕</span>';
-    
-    setTimeout(() => {
-      this.innerHTML = originalText;
-    }, 1500);
-  });
-  
-  // تأثيرات عند التمرير
-  const messageLines = document.querySelectorAll('.message-line');
-  
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.style.animationPlayState = 'running';
-      }
-    });
-  }, { threshold: 0.1 });
-  
-  messageLines.forEach(line => {
-    observer.observe(line);
-  });
-  
-  // تأثيرات عشوائية لطيفة
-  setInterval(() => {
-    if (Math.random() > 0.7) {
-      createConfetti(5);
-    }
-  }, 5000);
-  
-  console.log("💖 صفحة الحب جاهزة! كل عام وأنتِ بخير يا حبيبتي!");
-});
-
-// تأثيرات للمس على الجوال
-document.addEventListener('touchstart', function(e) {
-  if (e.target.id === 'heart' || e.target.closest('#heart')) {
-    heartClickEffect();
-  }
-});
-</script>
-</body>
-            </html>
+  msg.style.fontSize = '1.6rem';
+  m
